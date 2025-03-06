@@ -5415,9 +5415,7 @@ var $author$project$Main$contentStylesFullFlexHeight = _Utils_ap(
 	_List_fromArray(
 		[
 			A2($elm$html$Html$Attributes$style, 'flex', '1'),
-			A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-			A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
-			A2($elm$html$Html$Attributes$style, 'height', '100%')
+			A2($elm$html$Html$Attributes$style, 'min-height', '100%')
 		]),
 	$author$project$Main$contentStyles);
 var $elm$html$Html$div = _VirtualDom_node('div');
@@ -5510,11 +5508,9 @@ var $author$project$Main$panel = F2(
 					A2($elm$html$Html$Attributes$style, 'flex', '1'),
 					A2($elm$html$Html$Attributes$style, 'padding', '1rem'),
 					A2($elm$html$Html$Attributes$style, 'min-width', '300px'),
-					A2($elm$html$Html$Attributes$style, 'overflow-y', 'auto'),
 					A2($elm$html$Html$Attributes$style, 'min-height', 'calc(100vh - 100px)'),
-					A2($elm$html$Html$Attributes$style, 'display', 'flex'),
 					A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
-					A2($elm$html$Html$Attributes$style, 'height', 'calc(100vh - 100px)')
+					A2($elm$html$Html$Attributes$style, 'display', 'flex')
 				]),
 			A2(
 				$elm$core$List$cons,
@@ -9876,13 +9872,11 @@ var $author$project$Main$view = F2(
 									_Utils_ap(
 										_List_fromArray(
 											[
-												$author$project$Main$revertStyle,
 												A2($elm$html$Html$Attributes$style, 'width', '100%'),
-												A2($elm$html$Html$Attributes$style, 'height', '100%'),
-												A2($elm$html$Html$Attributes$style, 'flex', '1'),
 												A2($elm$html$Html$Attributes$style, 'font-family', 'monospace'),
 												A2($elm$html$Html$Attributes$style, 'font-size', '1rem'),
-												A2($elm$html$Html$Attributes$style, 'overflow', 'auto'),
+												A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+												A2($elm$html$Html$Attributes$style, 'field-sizing', 'normal'),
 												$elm$html$Html$Attributes$value(model.W),
 												$elm$html$Html$Events$onInput($author$project$Main$UpdateMarkdown),
 												$elm$html$Html$Attributes$autofocus(true)
@@ -9900,12 +9894,7 @@ var $author$project$Main$view = F2(
 									A2(
 										$elm$core$List$cons,
 										$elm$html$Html$Attributes$class(model.V),
-										_Utils_ap(
-											$author$project$Main$contentStylesFullFlexHeight,
-											_List_fromArray(
-												[
-													A2($elm$html$Html$Attributes$style, 'overflow', 'auto')
-												]))),
+										$author$project$Main$contentStylesFullFlexHeight),
 									A2($pablohirafuji$elm_markdown$Markdown$toHtml, $elm$core$Maybe$Nothing, model.W))
 								]))
 						]))
