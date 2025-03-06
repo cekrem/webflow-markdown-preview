@@ -5410,9 +5410,14 @@ var $author$project$Main$contentStyles = _List_fromArray(
 		A2($elm$html$Html$Attributes$style, 'box-sizing', 'border-box'),
 		A2($elm$html$Html$Attributes$style, 'width', '100%')
 	]);
-var $author$project$Main$contentStylesFullFlexHeight = A2(
-	$elm$core$List$cons,
-	A2($elm$html$Html$Attributes$style, 'flex', '1'),
+var $author$project$Main$contentStylesFullFlexHeight = _Utils_ap(
+	_List_fromArray(
+		[
+			A2($elm$html$Html$Attributes$style, 'flex', '1'),
+			A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+			A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
+			A2($elm$html$Html$Attributes$style, 'height', '100%')
+		]),
 	$author$project$Main$contentStyles);
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$input = _VirtualDom_node('input');
@@ -5508,7 +5513,7 @@ var $author$project$Main$panel = F2(
 					A2($elm$html$Html$Attributes$style, 'min-height', 'calc(100vh - 100px)'),
 					A2($elm$html$Html$Attributes$style, 'display', 'flex'),
 					A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
-					A2($elm$html$Html$Attributes$style, 'gap', '1rem')
+					A2($elm$html$Html$Attributes$style, 'height', 'calc(100vh - 100px)')
 				]),
 			A2(
 				$elm$core$List$cons,
@@ -9854,9 +9859,9 @@ var $author$project$Main$view = F2(
 							A2($elm$html$Html$Attributes$style, 'width', '100vw'),
 							A2($elm$html$Html$Attributes$style, 'height', '100%'),
 							A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-							A2($elm$html$Html$Attributes$style, 'flex-wrap', 'wrap'),
 							A2($elm$html$Html$Attributes$style, 'align-items', 'flex-start'),
-							A2($elm$html$Html$Attributes$style, 'justify-content', 'center')
+							A2($elm$html$Html$Attributes$style, 'justify-content', 'center'),
+							A2($elm$html$Html$Attributes$style, 'overflow', 'hidden')
 						]),
 					_List_fromArray(
 						[
@@ -9872,11 +9877,11 @@ var $author$project$Main$view = F2(
 											[
 												$author$project$Main$revertStyle,
 												A2($elm$html$Html$Attributes$style, 'width', '100%'),
-												A2($elm$html$Html$Attributes$style, 'min-height', '100%'),
 												A2($elm$html$Html$Attributes$style, 'height', '100%'),
+												A2($elm$html$Html$Attributes$style, 'flex', '1'),
 												A2($elm$html$Html$Attributes$style, 'font-family', 'monospace'),
 												A2($elm$html$Html$Attributes$style, 'font-size', '1rem'),
-												A2($elm$html$Html$Attributes$style, 'overflow-x', 'scroll'),
+												A2($elm$html$Html$Attributes$style, 'overflow', 'auto'),
 												$elm$html$Html$Attributes$value(model.W),
 												$elm$html$Html$Events$onInput($author$project$Main$UpdateMarkdown),
 												$elm$html$Html$Attributes$autofocus(true)
@@ -9894,7 +9899,12 @@ var $author$project$Main$view = F2(
 									A2(
 										$elm$core$List$cons,
 										$elm$html$Html$Attributes$class(model.V),
-										$author$project$Main$contentStylesFullFlexHeight),
+										_Utils_ap(
+											$author$project$Main$contentStylesFullFlexHeight,
+											_List_fromArray(
+												[
+													A2($elm$html$Html$Attributes$style, 'overflow', 'auto')
+												]))),
 									A2($pablohirafuji$elm_markdown$Markdown$toHtml, $elm$core$Maybe$Nothing, model.W))
 								]))
 						]))
