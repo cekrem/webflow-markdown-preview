@@ -5456,37 +5456,42 @@ var $elm$html$Html$Attributes$placeholder = $elm$html$Html$Attributes$stringProp
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
-var $author$project$Main$customInput = F3(
-	function (inputValue, labelText, onInputHandler) {
+var $author$project$Main$customInput = F4(
+	function (inputValue, labelText, onInputHandler, additionalElements) {
 		return A2(
 			$elm$html$Html$label,
 			_List_fromArray(
 				[
-					$elm$html$Html$Attributes$name(labelText)
+					$elm$html$Html$Attributes$name(labelText),
+					A2($elm$html$Html$Attributes$style, 'flex', '1'),
+					A2($elm$html$Html$Attributes$style, 'width', '100%')
 				]),
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$div,
-					_List_Nil,
-					_List_fromArray(
-						[
-							$elm$html$Html$text(labelText)
-						])),
-					A2(
-					$elm$html$Html$input,
-					_Utils_ap(
+			_Utils_ap(
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_Nil,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$value(inputValue),
-								$elm$html$Html$Events$onInput(onInputHandler),
-								$elm$html$Html$Attributes$placeholder(labelText),
-								A2($elm$html$Html$Attributes$style, 'overflow-x', 'scroll'),
-								A2($elm$html$Html$Attributes$style, 'width', '100%')
-							]),
-						$author$project$Main$contentStyles),
-					_List_Nil)
-				]));
+								$elm$html$Html$text(labelText)
+							])),
+						A2(
+						$elm$html$Html$input,
+						_Utils_ap(
+							$author$project$Main$contentStyles,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$value(inputValue),
+									$elm$html$Html$Events$onInput(onInputHandler),
+									$elm$html$Html$Attributes$placeholder(labelText),
+									A2($elm$html$Html$Attributes$style, 'overflow-x', 'scroll'),
+									A2($elm$html$Html$Attributes$style, 'min-width', '360px'),
+									A2($elm$html$Html$Attributes$style, 'padding', '0 0.5rem')
+								])),
+						_List_Nil)
+					]),
+				additionalElements));
 	});
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $author$project$Main$revertStyle = A2($elm$html$Html$Attributes$style, 'all', 'revert');
@@ -5542,16 +5547,13 @@ var $elm$core$Maybe$withDefault = F2(
 		}
 	});
 var $author$project$Main$stylesheetInput = function (stylesheet) {
-	return A2(
-		$elm$html$Html$div,
-		_List_Nil,
+	return A4(
+		$author$project$Main$customInput,
+		A2($elm$core$Maybe$withDefault, '', stylesheet),
+		'Stylesheet URL:',
+		$author$project$Main$UpdateStylesheet,
 		_List_fromArray(
 			[
-				A3(
-				$author$project$Main$customInput,
-				A2($elm$core$Maybe$withDefault, '', stylesheet),
-				'Enter a stylesheet URL (optional):',
-				$author$project$Main$UpdateStylesheet),
 				function () {
 				if (!stylesheet.$) {
 					var url = stylesheet.a;
@@ -9823,7 +9825,8 @@ var $author$project$Main$topBar = function (content) {
 			[
 				$author$project$Main$revertStyle,
 				A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-				A2($elm$html$Html$Attributes$style, 'background-color', 'white'),
+				A2($elm$html$Html$Attributes$style, 'gap', '1rem'),
+				A2($elm$html$Html$Attributes$style, 'background-color', 'rgba(255, 255, 255, 0.8)'),
 				A2($elm$html$Html$Attributes$style, 'justify-content', 'space-between'),
 				A2($elm$html$Html$Attributes$style, 'align-items', 'center'),
 				A2($elm$html$Html$Attributes$style, 'position', 'sticky'),
@@ -9841,15 +9844,8 @@ var $author$project$Main$view = F2(
 					$author$project$Main$topBar(
 					_List_fromArray(
 						[
-							A2(
-							$elm$html$Html$h1,
-							_List_Nil,
-							_List_fromArray(
-								[
-									$elm$html$Html$text(title)
-								])),
 							$author$project$Main$stylesheetInput(model.Y),
-							A3($author$project$Main$customInput, model.V, 'Content class name(s) (optional):', $author$project$Main$UpdateContentClassName)
+							A4($author$project$Main$customInput, model.V, 'Content class name(s):', $author$project$Main$UpdateContentClassName, _List_Nil)
 						])),
 					A2(
 					$elm$html$Html$div,
@@ -9877,7 +9873,9 @@ var $author$project$Main$view = F2(
 												$author$project$Main$revertStyle,
 												A2($elm$html$Html$Attributes$style, 'width', '100%'),
 												A2($elm$html$Html$Attributes$style, 'min-height', '100%'),
+												A2($elm$html$Html$Attributes$style, 'height', '100%'),
 												A2($elm$html$Html$Attributes$style, 'font-family', 'monospace'),
+												A2($elm$html$Html$Attributes$style, 'font-size', '1rem'),
 												A2($elm$html$Html$Attributes$style, 'overflow-x', 'scroll'),
 												$elm$html$Html$Attributes$value(model.W),
 												$elm$html$Html$Events$onInput($author$project$Main$UpdateMarkdown),
