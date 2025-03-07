@@ -4,7 +4,10 @@ import Browser exposing (Document)
 import Html exposing (Html, div, h1, input, label, node, text, textarea)
 import Html.Attributes exposing (autofocus, class, href, id, name, placeholder, rel, style, value)
 import Html.Events exposing (..)
+import Http
 import Markdown
+import Regex
+import Task
 
 
 
@@ -33,15 +36,16 @@ main =
 type alias Model =
     { markdownInput : String
     , stylesheet : Maybe String
+    , stylesheetContent : Maybe String
     , contentClassName : String
     , showCopySuccess : Bool
     }
 
 
-init : String -> String -> String -> ( Model, Cmd msg )
+init : String -> String -> String -> ( Model, Cmd Msg )
 init markdown stylesheetUrl containerClassName =
-    ( Model markdown (Just stylesheetUrl) containerClassName False
-    , Cmd.none
+    ( Model markdown (Just stylesheetUrl) Nothing containerClassName False
+    , fetchStylesheet stylesheetUrl
     )
 
 
@@ -55,6 +59,7 @@ type Msg
     | UpdateContentClassName String
     | CopyToClipboard
     | CopySuccess
+    | StylesheetFetched (Result Http.Error String)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -67,13 +72,13 @@ update msg model =
 
         UpdateStylesheet url ->
             if String.isEmpty url then
-                ( { model | stylesheet = Nothing }
+                ( { model | stylesheet = Nothing, stylesheetContent = Nothing }
                 , Cmd.none
                 )
 
             else
-                ( { model | stylesheet = Just url }
-                , Cmd.none
+                ( { model | stylesheet = Just url, stylesheetContent = Nothing }
+                , fetchStylesheet url
                 )
 
         UpdateContentClassName newClassName ->
@@ -86,6 +91,18 @@ update msg model =
 
         CopySuccess ->
             ( { model | showCopySuccess = True }, Cmd.none )
+
+        StylesheetFetched result ->
+            case result of
+                Ok content ->
+                    ( { model | stylesheetContent = Just (scopeStylesheet content) }
+                    , Cmd.none
+                    )
+
+                Err _ ->
+                    ( { model | stylesheetContent = Nothing }
+                    , Cmd.none
+                    )
 
 
 
@@ -116,7 +133,7 @@ view title model =
     { title = title
     , body =
         [ topBar
-            [ stylesheetInput model.stylesheet
+            [ stylesheetInput model.stylesheet model.stylesheetContent
             , customInput
                 model.contentClassName
                 "Content class name(s):"
@@ -191,19 +208,17 @@ customInput inputValue labelText onInputHandler additionalElements =
         )
 
 
-stylesheetInput : Maybe String -> Html Msg
-stylesheetInput stylesheet =
+stylesheetInput : Maybe String -> Maybe String -> Html Msg
+stylesheetInput stylesheet stylesheetContent =
     customInput
         (Maybe.withDefault "" stylesheet)
         "Stylesheet URL:"
         UpdateStylesheet
-        [ case stylesheet of
-            Just url ->
-                node "link"
-                    [ href url
-                    , rel "stylesheet"
-                    ]
-                    []
+        [ case stylesheetContent of
+            Just content ->
+                node "style"
+                    [ id "scoped-stylesheet" ]
+                    [ text content ]
 
             Nothing ->
                 text ""
@@ -374,3 +389,59 @@ $ npm install -g ripnote
 ![ripnote](https://github.com/cekrem/ripnote/raw/main/screenshot.gif)
 
 """
+
+
+
+-- HELPERS
+
+
+fetchStylesheet : String -> Cmd Msg
+fetchStylesheet url =
+    if String.isEmpty url then
+        Cmd.none
+
+    else
+        Http.get
+            { url = url
+            , expect = Http.expectString StylesheetFetched
+            }
+
+
+scopeStylesheet : String -> String
+scopeStylesheet css =
+    let
+        -- This regex finds CSS selectors and prepends #html-output to them
+        selectorRegex =
+            Regex.fromString "([^{}]+)({[^}]*})"
+                |> Maybe.withDefault Regex.never
+
+        replacer : Regex.Match -> String
+        replacer match =
+            case match.submatches of
+                (Just selector) :: (Just rules) :: _ ->
+                    let
+                        -- Split by commas to handle multiple selectors
+                        selectors =
+                            String.split "," selector
+
+                        -- Scope each selector
+                        scopedSelectors =
+                            selectors
+                                |> List.map String.trim
+                                |> List.map
+                                    (\s ->
+                                        if String.startsWith "@" s then
+                                            -- Don't scope media queries and other @ rules
+                                            s
+
+                                        else
+                                            "#" ++ htmlOutputId ++ " " ++ s
+                                    )
+                                |> String.join ", "
+                    in
+                    scopedSelectors ++ rules
+
+                _ ->
+                    match.match
+    in
+    Regex.replace selectorRegex replacer css
