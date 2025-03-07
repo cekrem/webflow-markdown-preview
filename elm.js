@@ -9917,7 +9917,7 @@ var $author$project$Main$view = F2(
 														$elm$html$Html$div,
 														_List_fromArray(
 															[
-																$elm$html$Html$Attributes$class('absolute top-0 right-0 p-4 bg-white/80 rounded')
+																$elm$html$Html$Attributes$class('absolute top-0 margin-auto p-4 bg-white/80 rounded')
 															]),
 														_List_fromArray(
 															[
