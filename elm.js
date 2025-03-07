@@ -9867,8 +9867,7 @@ var $author$project$Main$view = F2(
 							A2($elm$html$Html$Attributes$style, 'height', '100%'),
 							A2($elm$html$Html$Attributes$style, 'display', 'flex'),
 							A2($elm$html$Html$Attributes$style, 'align-items', 'flex-start'),
-							A2($elm$html$Html$Attributes$style, 'justify-content', 'center'),
-							A2($elm$html$Html$Attributes$style, 'overflow', 'hidden')
+							A2($elm$html$Html$Attributes$style, 'justify-content', 'center')
 						]),
 					_List_fromArray(
 						[
@@ -9882,7 +9881,7 @@ var $author$project$Main$view = F2(
 									_Utils_ap(
 										_List_fromArray(
 											[
-												A2($elm$html$Html$Attributes$style, 'width', '100%'),
+												$author$project$Main$revertStyle,
 												A2($elm$html$Html$Attributes$style, 'font-family', 'monospace'),
 												A2($elm$html$Html$Attributes$style, 'font-size', '1rem'),
 												A2($elm$html$Html$Attributes$style, 'display', 'flex'),
