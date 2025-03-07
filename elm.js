@@ -5310,7 +5310,7 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$document = _Browser_document;
 var $author$project$Main$Model = F4(
 	function (markdownInput, stylesheet, contentClassName, showCopySuccess) {
-		return {V: contentClassName, W: markdownInput, Y: showCopySuccess, Z: stylesheet};
+		return {W: contentClassName, N: markdownInput, Y: showCopySuccess, Z: stylesheet};
 	});
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
@@ -5349,7 +5349,7 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{W: newText, Y: false}),
+						{N: newText, Y: false}),
 					$elm$core$Platform$Cmd$none);
 			case 1:
 				var url = msg.a;
@@ -5369,7 +5369,7 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{V: newClassName}),
+						{W: newClassName}),
 					$elm$core$Platform$Cmd$none);
 			case 3:
 				return _Utils_Tuple2(
@@ -5550,23 +5550,21 @@ var $author$project$Main$styles = function () {
 						A2($elm$html$Html$Attributes$style, 'justify-content', 'center')
 					]))),
 		aF: _Utils_ap(
-			reset,
+			container,
 			_Utils_ap(
+				flexGrow,
 				_List_fromArray(
 					[
 						A2($elm$html$Html$Attributes$style, 'font-family', 'monospace'),
+						A2($elm$html$Html$Attributes$style, 'min-height', '100%'),
+						A2($elm$html$Html$Attributes$style, 'height', '100%'),
 						A2($elm$html$Html$Attributes$style, 'font-size', '1rem'),
-						A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-						A2($elm$html$Html$Attributes$style, 'field-sizing', 'normal')
-					]),
-				_Utils_ap(
-					container,
-					_Utils_ap(
-						flexGrow,
-						_List_fromArray(
-							[
-								A2($elm$html$Html$Attributes$style, 'min-height', '100%')
-							]))))),
+						A2($elm$html$Html$Attributes$style, 'display', 'block'),
+						A2($elm$html$Html$Attributes$style, 'box-sizing', 'border-box'),
+						A2($elm$html$Html$Attributes$style, 'resize', 'none'),
+						A2($elm$html$Html$Attributes$style, 'background', 'none'),
+						A2($elm$html$Html$Attributes$style, 'field-sizing', 'content')
+					]))),
 		aS: reset,
 		aX: _Utils_ap(
 			reset,
@@ -5631,6 +5629,12 @@ var $elm$html$Html$Events$on = F2(
 			event,
 			$elm$virtual_dom$VirtualDom$Normal(decoder));
 	});
+var $elm$html$Html$Events$onBlur = function (msg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'blur',
+		$elm$json$Json$Decode$succeed(msg));
+};
 var $elm$html$Html$Events$onClick = function (msg) {
 	return A2(
 		$elm$html$Html$Events$on,
@@ -5703,6 +5707,12 @@ var $author$project$Main$stylesheetInput = function (stylesheet) {
 				}
 			}()
 			]));
+};
+var $elm$html$Html$Attributes$tabindex = function (n) {
+	return A2(
+		_VirtualDom_attribute,
+		'tabIndex',
+		$elm$core$String$fromInt(n));
 };
 var $elm$html$Html$textarea = _VirtualDom_node('textarea');
 var $elm$core$List$append = F2(
@@ -6853,7 +6863,7 @@ var $pablohirafuji$elm_markdown$Markdown$Block$extractOrderedListRM = function (
 					L: delimiter,
 					j: $elm$core$String$length(indentString) + 1,
 					w: false,
-					R: A2(
+					S: A2(
 						$elm$core$Maybe$withDefault,
 						$pablohirafuji$elm_markdown$Markdown$Block$Unordered,
 						A2(
@@ -6963,7 +6973,7 @@ var $pablohirafuji$elm_markdown$Markdown$Block$extractUnorderedListRM = function
 					L: delimiter,
 					j: $elm$core$String$length(indentString) + 1,
 					w: false,
-					R: $pablohirafuji$elm_markdown$Markdown$Block$Unordered
+					S: $pablohirafuji$elm_markdown$Markdown$Block$Unordered
 				},
 				A2($elm$core$Maybe$withDefault, '', maybeIndentSpace),
 				A2($elm$core$Maybe$withDefault, '', maybeRawLine)));
@@ -7388,7 +7398,7 @@ var $pablohirafuji$elm_markdown$Markdown$Block$parseListLine = F3(
 								A2($pablohirafuji$elm_markdown$Markdown$Block$addToParagraph, rawText, rawLine),
 								astTail);
 						} else {
-							var _v5 = listBlock.R;
+							var _v5 = listBlock.S;
 							if (_v5.$ === 1) {
 								if (_v5.a === 1) {
 									return newList;
@@ -7503,7 +7513,7 @@ var $pablohirafuji$elm_markdown$Markdown$Inline$Text = function (a) {
 };
 var $pablohirafuji$elm_markdown$Markdown$InlineParser$matchToInline = function (_v0) {
 	var match = _v0;
-	var _v1 = match.R;
+	var _v1 = match.S;
 	switch (_v1.$) {
 		case 0:
 			return $pablohirafuji$elm_markdown$Markdown$Inline$Text(match.i);
@@ -7545,7 +7555,7 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$matchToInline = function (
 			var model = _v1.a;
 			return A3(
 				$pablohirafuji$elm_markdown$Markdown$Inline$HtmlInline,
-				model.O,
+				model.P,
 				model.aq,
 				$pablohirafuji$elm_markdown$Markdown$InlineParser$matchesToInlines(match.a));
 		default:
@@ -7634,7 +7644,7 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$normalMatch = function (te
 		i: $pablohirafuji$elm_markdown$Markdown$Helpers$formatStr(text),
 		I: 0,
 		s: 0,
-		R: $pablohirafuji$elm_markdown$Markdown$InlineParser$NormalType
+		S: $pablohirafuji$elm_markdown$Markdown$InlineParser$NormalType
 	};
 };
 var $pablohirafuji$elm_markdown$Markdown$InlineParser$parseTextMatch = F3(
@@ -7656,7 +7666,7 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$parseTextMatch = F3(
 		} else {
 			var matchHead = parsedMatches.a;
 			var matchesTail = parsedMatches.b;
-			return _Utils_eq(matchHead.R, $pablohirafuji$elm_markdown$Markdown$InlineParser$NormalType) ? A2($elm$core$List$cons, updtMatch, parsedMatches) : (_Utils_eq(matchModel.au, matchHead.al) ? A2($elm$core$List$cons, updtMatch, parsedMatches) : ((_Utils_cmp(matchModel.au, matchHead.al) < 0) ? A2(
+			return _Utils_eq(matchHead.S, $pablohirafuji$elm_markdown$Markdown$InlineParser$NormalType) ? A2($elm$core$List$cons, updtMatch, parsedMatches) : (_Utils_eq(matchModel.au, matchHead.al) ? A2($elm$core$List$cons, updtMatch, parsedMatches) : ((_Utils_cmp(matchModel.au, matchHead.al) < 0) ? A2(
 				$elm$core$List$cons,
 				updtMatch,
 				A2(
@@ -8193,7 +8203,7 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$autolinkToMatch = function
 		_Utils_update(
 			match,
 			{
-				R: $pablohirafuji$elm_markdown$Markdown$InlineParser$AutolinkType(
+				S: $pablohirafuji$elm_markdown$Markdown$InlineParser$AutolinkType(
 					_Utils_Tuple2(
 						match.i,
 						$pablohirafuji$elm_markdown$Markdown$InlineParser$encodeUrl(match.i)))
@@ -8247,8 +8257,8 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$inlineLinkTypeOrImageTypeR
 					matchModel,
 					{
 						au: matchModel.au + $elm$core$String$length(regexMatch.bi),
-						R: function () {
-							var _v5 = matchModel.R;
+						S: function () {
+							var _v5 = matchModel.S;
 							if (_v5.$ === 5) {
 								return $pablohirafuji$elm_markdown$Markdown$InlineParser$ImageType;
 							} else {
@@ -8323,8 +8333,8 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$refRegexToMatch = F3(
 				matchModel,
 				{
 					au: matchModel.au + regexMatchLength,
-					R: function () {
-						var _v0 = matchModel.R;
+					S: function () {
+						var _v0 = matchModel.S;
 						if (_v0.$ === 5) {
 							return $pablohirafuji$elm_markdown$Markdown$InlineParser$ImageType;
 						} else {
@@ -8423,7 +8433,7 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$emailAutolinkTypeToMatch =
 		_Utils_update(
 			match,
 			{
-				R: $pablohirafuji$elm_markdown$Markdown$InlineParser$AutolinkType(
+				S: $pablohirafuji$elm_markdown$Markdown$InlineParser$AutolinkType(
 					_Utils_Tuple2(
 						match.i,
 						'mailto:' + $pablohirafuji$elm_markdown$Markdown$InlineParser$encodeUrl(match.i)))
@@ -8482,7 +8492,7 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$findToken = F2(
 	});
 var $pablohirafuji$elm_markdown$Markdown$InlineParser$HtmlModel = F2(
 	function (tag, attributes) {
-		return {aq: attributes, O: tag};
+		return {aq: attributes, P: tag};
 	});
 var $pablohirafuji$elm_markdown$Markdown$InlineParser$HtmlToken = F2(
 	function (a, b) {
@@ -8615,7 +8625,7 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$isCloseToken = F2(
 		var _v0 = token.c;
 		if ((_v0.$ === 5) && (!_v0.a)) {
 			var htmlModel_ = _v0.b;
-			return _Utils_eq(htmlModel.O, htmlModel_.O);
+			return _Utils_eq(htmlModel.P, htmlModel_.P);
 		} else {
 			return false;
 		}
@@ -8666,7 +8676,7 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$isOpenEmphasisToken = F2(
 var $pablohirafuji$elm_markdown$Markdown$InlineParser$voidHtmlTags = _List_fromArray(
 	['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
 var $pablohirafuji$elm_markdown$Markdown$InlineParser$isVoidTag = function (htmlModel) {
-	return A2($elm$core$List$member, htmlModel.O, $pablohirafuji$elm_markdown$Markdown$InlineParser$voidHtmlTags);
+	return A2($elm$core$List$member, htmlModel.P, $pablohirafuji$elm_markdown$Markdown$InlineParser$voidHtmlTags);
 };
 var $pablohirafuji$elm_markdown$Markdown$InlineParser$HardLineBreakType = {$: 1};
 var $pablohirafuji$elm_markdown$Markdown$InlineParser$SoftLineBreakToken = {$: 7};
@@ -8679,7 +8689,7 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$reverseTokens = function (
 };
 var $pablohirafuji$elm_markdown$Markdown$InlineParser$tokenToMatch = F2(
 	function (token, type_) {
-		return {au: token.bg + token.b, a: _List_Nil, al: token.bg, i: '', I: 0, s: 0, R: type_};
+		return {au: token.bg + token.b, a: _List_Nil, al: token.bg, i: '', I: 0, s: 0, S: type_};
 	});
 var $pablohirafuji$elm_markdown$Markdown$InlineParser$lineBreakTTM = function (_v0) {
 	lineBreakTTM:
@@ -8942,9 +8952,9 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$emphasisToMatch = F4(
 		var innerTokens = _v15.b;
 		var remainTokens = _v15.c;
 		var remainLength = openToken.b - closeToken.b;
-		var updt = (!remainLength) ? {U: closeToken, N: openToken, X: remainTokens, _: tokensTail} : ((remainLength > 0) ? {
-			U: closeToken,
-			N: _Utils_update(
+		var updt = (!remainLength) ? {V: closeToken, O: openToken, X: remainTokens, _: tokensTail} : ((remainLength > 0) ? {
+			V: closeToken,
+			O: _Utils_update(
 				openToken,
 				{bg: openToken.bg + remainLength, b: closeToken.b}),
 			X: A2(
@@ -8955,10 +8965,10 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$emphasisToMatch = F4(
 				remainTokens),
 			_: tokensTail
 		} : {
-			U: _Utils_update(
+			V: _Utils_update(
 				closeToken,
 				{b: openToken.b}),
-			N: openToken,
+			O: openToken,
 			X: remainTokens,
 			_: A2(
 				$elm$core$List$cons,
@@ -8973,9 +8983,9 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$emphasisToMatch = F4(
 			function (s) {
 				return s;
 			},
-			$pablohirafuji$elm_markdown$Markdown$InlineParser$EmphasisType(updt.N.b),
-			updt.N,
-			updt.U,
+			$pablohirafuji$elm_markdown$Markdown$InlineParser$EmphasisType(updt.O.b),
+			updt.O,
+			updt.V,
 			$elm$core$List$reverse(innerTokens));
 		return _Utils_Tuple2(
 			updt._,
@@ -9222,7 +9232,7 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$tokenPairToMatch = F6(
 				A3($elm$core$String$slice, textStart, textEnd, model.m)),
 			I: textEnd,
 			s: textStart,
-			R: type_
+			S: type_
 		};
 		var matches = A2(
 			$elm$core$List$map,
@@ -9900,7 +9910,7 @@ var $pablohirafuji$elm_markdown$Markdown$Block$defaultHtml = F3(
 					return A2($elm$core$List$cons, a, _List_Nil);
 				}(
 					function () {
-						var _v5 = model.R;
+						var _v5 = model.S;
 						if (_v5.$ === 1) {
 							var startInt = _v5.a;
 							return (startInt === 1) ? $elm$html$Html$ol(_List_Nil) : $elm$html$Html$ol(
@@ -9962,7 +9972,7 @@ var $author$project$Main$view = F2(
 					_List_fromArray(
 						[
 							$author$project$Main$stylesheetInput(model.Z),
-							A4($author$project$Main$customInput, model.V, 'Content class name(s):', $author$project$Main$UpdateContentClassName, _List_Nil)
+							A4($author$project$Main$customInput, model.W, 'Content class name(s):', $author$project$Main$UpdateContentClassName, _List_Nil)
 						])),
 					A2(
 					$elm$html$Html$div,
@@ -9980,7 +9990,7 @@ var $author$project$Main$view = F2(
 										$author$project$Main$styles.aF,
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$value(model.W),
+												$elm$html$Html$Attributes$value(model.N),
 												$elm$html$Html$Events$onInput($author$project$Main$UpdateMarkdown),
 												$elm$html$Html$Attributes$autofocus(true)
 											])),
@@ -9997,12 +10007,15 @@ var $author$project$Main$view = F2(
 										$author$project$Main$styles.aA,
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$class(model.V),
+												$elm$html$Html$Attributes$class(model.W),
 												$elm$html$Html$Events$onClick($author$project$Main$CopyToClipboard),
-												$elm$html$Html$Attributes$id($author$project$Main$htmlOutputId)
+												$elm$html$Html$Attributes$id($author$project$Main$htmlOutputId),
+												$elm$html$Html$Attributes$tabindex(1),
+												$elm$html$Html$Events$onBlur(
+												$author$project$Main$UpdateMarkdown(model.N))
 											])),
 									_Utils_ap(
-										A2($pablohirafuji$elm_markdown$Markdown$toHtml, $elm$core$Maybe$Nothing, model.W),
+										A2($pablohirafuji$elm_markdown$Markdown$toHtml, $elm$core$Maybe$Nothing, model.N),
 										model.Y ? _List_fromArray(
 											[
 												A2(
